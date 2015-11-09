@@ -4,7 +4,6 @@
 	<head>
 	
 	<script>
-		var equation = "";
 		function calc(eq) {
 			var start = 0;
 			if (eq.charAt(0) == '(') ++start;
@@ -50,8 +49,51 @@
 			if (eq.charAt(pos) == '*') return tmp1 * tmp2;
 			if (eq.charAt(pos) == '/') return tmp1 / tmp2;
 		}
+		
+		var equation = "";
+		var isAnswer = false;
+		
 		function append(ch) {
+			if (isAnswer) equation = "";
 			equation += ch;
+			isAnswer = false;
+		}
+		
+		function clear() {
+			equation = "";
+			isAnswer = false;
+		}
+		
+		function backSpace() {
+			if (isAnswer) equation = "";
+			else equation = equation.substring(0, equation.length - 2);
+			isAnswer = false;
+		}
+		
+		function getAnswer() {
+			var textBoxNode = getElementById("t");
+			textBoxNode.innerHtml = toString(calc(equation));
+			isAnswer = true;
+		}
+		
+		function createButton(ch) {
+			var buttonNode = document.createElement("button");
+			buttonNode.setAttribute("type", "button");
+			if (ch != '=' && ch != 'd' && ch != 'C') {
+				buttonNode.setAttribute("onclick", "append(ch)");
+			}
+			else {
+				if (ch == '=') buttonNode.setAttribute("onclick", "getAnswer()");
+				if (ch == 'd') buttonNode.setAttribute("onclick", "backSpace()");
+				if (ch == 'C') buttonNode.setAttribute("onclick", "clear()");
+			}
+			var textNode;
+			if (ch == 'd')
+				textNode = document.createTextNode("¡û");
+			else
+				textNode = document.createTextNode(ch);
+			buttonNode.appendChild(textNode);
+			return buttonNode;
 		}
 	</script>
 	
