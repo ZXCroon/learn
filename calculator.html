@@ -10,7 +10,7 @@
 			var start = 0;
 			if (eq.charAt(0) == '(') ++start;
 			var end = eq.length - 1;
-			if (eq.charAt(eq.length - 1)) --end;
+			if (eq.charAt(eq.length - 1) == ')') --end;
 			var pos = start;
 			var cnt = 0;
 			for (; pos <= end; ++pos) {
@@ -43,9 +43,12 @@
 					if (ch == '*' || ch == '/') break;
 				}
 			}
-			if (pos > end) return Number(eq);
-			var tmp1 = calc(eq.substring(start, pos - 1));
-			var tmp2 = calc(eq.substring(pos + 1, end));
+			if (pos > end) {
+				if (eq.substring(start, end + 1) == "") return NaN;
+				else return Number(eq.substring(start, end + 1));
+			}
+			var tmp1 = calc(eq.substring(start, pos));
+			var tmp2 = calc(eq.substring(pos + 1, end + 1));
 			if (eq.charAt(pos) == '+') return tmp1 + tmp2;
 			if (eq.charAt(pos) == '-') return tmp1 - tmp2;
 			if (eq.charAt(pos) == '*') return tmp1 * tmp2;
@@ -53,10 +56,7 @@
 		}
 		
 		function update() {
-			/*
-			var textBoxNode = document.createTextNode(equation);
-			document.getElementById("t").appendChild(textBoxNode);
-			*/
+			if (equation == "Infinity" || equation == "NaN") equation = "Illegal input!";
 			document.getElementById("t").innerHTML = equation;
 		}
 		
@@ -69,14 +69,20 @@
 		
 		function clear() {
 			equation = "0";
-			isAnswer = false;
+			isAnswer = true;
 			update();
 		}
 		
 		function backSpace() {
 			if (isAnswer) equation = "0";
-			else equation = equation.substring(0, equation.length - 2);
-			isAnswer = false;
+			else equation = equation.substring(0, equation.length - 1);
+			if (equation.length == 0) {
+				equation = "0";
+				isAnswer = true;
+			}
+			else {
+				isAnswer = false;
+			}
 			update();
 		}
 		
@@ -94,9 +100,9 @@
 				buttonNode.onclick = function() {append(ch)};
 			}
 			else {
-				if (ch == '=') buttonNode.onclick = getAnswer();
-				if (ch == 'd') buttonNode.onclick = backSpace();
-				if (ch == 'C') buttonNode.onclick = clear();
+				if (ch == '=') buttonNode.onclick = function() {getAnswer()};
+				if (ch == 'd') buttonNode.onclick = function() {backSpace()};
+				if (ch == 'C') buttonNode.onclick = function() {clear()};
 			}
 			var textNode;
 			if (ch == 'd')
@@ -104,8 +110,10 @@
 			else
 				textNode = document.createTextNode(ch);
 			if (ch == '=')
-				buttonNode.style = "width: 71 px";
+				buttonNode.style = "width: 100 px";
 			buttonNode.appendChild(textNode);
+			equation = "0";
+			isAnswer = true;
 			return buttonNode;
 		}
 	</script>
