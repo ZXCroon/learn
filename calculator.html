@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+	
+	<script>
+		var equation = "";
+		function calc(eq) {
+			var start = 0;
+			if (eq.charAt(0) == '(') ++start;
+			var end = eq.length - 1;
+			if (eq.charAt(eq.length - 1)) --end;
+			var pos = start;
+			var cnt = 0;
+			for (; pos <= end; ++pos) {
+				var ch = eq.charAt(pos);
+				if (ch == '(') {
+					++cnt;
+					continue;
+				}
+				if (ch == ')') {
+					--cnt;
+					continue;
+				}
+				if (cnt > 0) continue;
+				if (ch == '+' || ch == '-') break;
+			}
+			if (pos > end) {
+				pos = start;
+				cnt = 0;
+				for (; pos <= end; ++pos) {
+					var ch = eq.charAt(pos);
+					if (ch == '(') {
+						++cnt;
+						continue;
+					}
+					if (ch == ')') {
+						--cnt;
+						continue;
+					}
+					if (cnt > 0) continue;
+					if (ch == '*' || ch == '/') break;
+				}
+			}
+			if (pos > end) return Number(eq);
+			var tmp1 = calc(eq.substring(start, pos - 1));
+			var tmp2 = calc(eq.substring(pos + 1, end));
+			if (eq.charAt(pos) == '+') return tmp1 + tmp2;
+			if (eq.charAt(pos) == '-') return tmp1 - tmp2;
+			if (eq.charAt(pos) == '*') return tmp1 * tmp2;
+			if (eq.charAt(pos) == '/') return tmp1 / tmp2;
+		}
+		function append(ch) {
+			equation += ch;
+		}
+	</script>
+	
+	</head>
+	<body>
+	</body>
+</html>
