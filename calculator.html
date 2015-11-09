@@ -115,16 +115,16 @@
 			else
 				textNode = document.createTextNode(ch);
 			buttonNode.appendChild(textNode);
+			document.getElementById(ch).appendChild(buttonNode);
 			equation = "0";
 			isAnswer = true;
-			return buttonNode;
 		}
 	</script>
 	
 	</head>
 	<body>
-		<br></br><br></br>
-		<h1 align = "center">Ëï¾¹Ò«ÅÆ¼ÆËãÆ÷</h1>
+		<br></br>
+		<h1 align = "center"><font color = "#563D7C">ºÓÉñ¼ÆËãÆ÷</font></h1>
 		<br></br>
 		<table style = "border:4px CornFlowerBlue solid;" bgcolor = "LightSteelBlue" align = "center">
 			<tr height = "40px">
@@ -165,26 +165,27 @@
 		<script>
 			update();
 			document.getElementById("t").style.fontSize = "19px";
-			document.getElementById("C").appendChild(createButton("C"));
-			document.getElementById("d").appendChild(createButton("d"));
-			document.getElementById("(").appendChild(createButton("("));
-			document.getElementById(")").appendChild(createButton(")"));
-			document.getElementById("1").appendChild(createButton("1"));
-			document.getElementById("2").appendChild(createButton("2"));
-			document.getElementById("3").appendChild(createButton("3"));
-			document.getElementById("+").appendChild(createButton("+"));
-			document.getElementById("4").appendChild(createButton("4"));
-			document.getElementById("5").appendChild(createButton("5"));
-			document.getElementById("6").appendChild(createButton("6"));
-			document.getElementById("-").appendChild(createButton("-"));
-			document.getElementById("7").appendChild(createButton("7"));
-			document.getElementById("8").appendChild(createButton("8"));
-			document.getElementById("9").appendChild(createButton("9"));
-			document.getElementById("*").appendChild(createButton("*"));
-			document.getElementById("0").appendChild(createButton("0"));
-			document.getElementById(".").appendChild(createButton("."));
-			document.getElementById("=").appendChild(createButton("="));
-			document.getElementById("/").appendChild(createButton("/"));
+			
+			createButton('C');
+			createButton('d');
+			createButton('(');
+			createButton(')');
+			createButton('1');
+			createButton('2');
+			createButton('3');
+			createButton('+');
+			createButton('4');
+			createButton('5');
+			createButton('6');
+			createButton('-');
+			createButton('7');
+			createButton('8');
+			createButton('9');
+			createButton('*');
+			createButton('0');
+			createButton('.');
+			createButton('=');
+			createButton('/');
 			
 		</script>
 	</body>
