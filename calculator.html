@@ -61,7 +61,7 @@
 		}
 		
 		function append(ch) {
-			if (isAnswer) equation = "";
+			if (isAnswer || (equation == "0" && ch != '.')) equation = "";
 			equation += ch;
 			isAnswer = false;
 			update();
@@ -76,7 +76,7 @@
 		function backSpace() {
 			if (isAnswer) equation = "0";
 			else equation = equation.substring(0, equation.length - 1);
-			if (equation.length == 0) {
+			if (equation.length == 0 || equation == "0") {
 				equation = "0";
 				isAnswer = true;
 			}
