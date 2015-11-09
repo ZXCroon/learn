@@ -62,6 +62,18 @@
 			document.getElementById("t").innerHTML = equation;
 		}
 		
+		function checkParentheses() {
+			var leftCnt = 0;
+			for (var i = 0; i < equation.length; ++i) {
+				if (equation.charAt(i) == '(') ++leftCnt;
+				if (equation.charAt(i) == ')') {
+					--leftCnt;
+					if (leftCnt < 0) return false;
+				}
+			}
+			return (leftCnt == 0);
+		}
+		
 		function append(ch) {
 			if (isAnswer || (equation == "0" && ch != '.')) equation = "";
 			equation += ch;
@@ -89,8 +101,13 @@
 		}
 		
 		function getAnswer() {
-			var answer = calc(equation);
-			equation = answer.toString();
+			if (checkParentheses()) {
+				var answer = calc(equation);
+				equation = answer.toString();
+			}
+			else {
+				equation = "Illegal input!";
+			}
 			isAnswer = true;
 			update();
 		}
