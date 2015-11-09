@@ -4,6 +4,8 @@
 	<head>
 	
 	<script>
+		equation = "0";
+		isAnswer = true;
 		function calc(eq) {
 			var start = 0;
 			if (eq.charAt(0) == '(') ++start;
@@ -50,70 +52,60 @@
 			if (eq.charAt(pos) == '/') return tmp1 / tmp2;
 		}
 		
-		var equation = "";
-		var isAnswer = false;
+		function update() {
+			var textBoxNode = document.createTextNode(equation);
+			document.getElementById("t").appendChild(textBoxNode);
+		}
 		
 		function append(ch) {
 			if (isAnswer) equation = "";
 			equation += ch;
 			isAnswer = false;
+			update();
 		}
 		
 		function clear() {
-			equation = "";
+			equation = "0";
 			isAnswer = false;
+			update();
 		}
 		
 		function backSpace() {
-			if (isAnswer) equation = "";
+			if (isAnswer) equation = "0";
 			else equation = equation.substring(0, equation.length - 2);
 			isAnswer = false;
+			update();
 		}
 		
 		function getAnswer() {
-			var textBoxNode = document.getElementById("t");
-			textBoxNode.innerHtml = toString(calc(equation));
+			var answer = calc(equation);
+			equation = answer.toString();
 			isAnswer = true;
+			update();
 		}
 		
 		function createButton(ch) {
 			var buttonNode = document.createElement("button");
-			buttonNode.setAttribute("type", "button");
+			buttonNode.type = "button";
 			if (ch != '=' && ch != 'd' && ch != 'C') {
-				buttonNode.setAttribute("onclick", "append(ch)");
+				//buttonNode.setAttribute("onclick", append(ch));
+				buttonNode.onclick = "append(ch)";
 			}
 			else {
-				if (ch == '=') buttonNode.setAttribute("onclick", "getAnswer()");
-				if (ch == 'd') buttonNode.setAttribute("onclick", "backSpace()");
-				if (ch == 'C') buttonNode.setAttribute("onclick", "clear()");
+				if (ch == '=') buttonNode.onclick = "getAnswer()";
+				if (ch == 'd') buttonNode.onclick = "backSpace()";
+				if (ch == 'C') buttonNode.onclick = "clear()";
 			}
 			var textNode;
 			if (ch == 'd')
 				textNode = document.createTextNode("¡û");
 			else
 				textNode = document.createTextNode(ch);
+			if (ch == '=')
+				buttonNode.setAttribute("style", "width: 71 px");
 			buttonNode.appendChild(textNode);
 			return buttonNode;
 		}
-		document.getElementById("C").appendChild(createButton("C"));
-		document.getElementById("d").appendChild(createButton("d"));
-		document.getElementById("(").appendChild(createButton("("));
-		document.getElementById(")").appendChild(createButton(")"));
-		document.getElementById("1").appendChild(createButton("1"));
-		document.getElementById("2").appendChild(createButton("2"));
-		document.getElementById("3").appendChild(createButton("3"));
-		document.getElementById("+").appendChild(createButton("+"));
-		document.getElementById("4").appendChild(createButton("4"));
-		document.getElementById("5").appendChild(createButton("5"));
-		document.getElementById("6").appendChild(createButton("6"));
-		document.getElementById("-").appendChild(createButton("-"));
-		document.getElementById("7").appendChild(createButton("7"));
-		document.getElementById("8").appendChild(createButton("8"));
-		document.getElementById("9").appendChild(createButton("9"));
-		document.getElementById("*").appendChild(createButton("*"));
-		document.getElementById("0").appendChild(createButton("0"));
-		document.getElementById("=").appendChild(createButton("="));
-		document.getElementById("/").appendChild(createButton("/"));
 	</script>
 	
 	</head>
@@ -148,9 +140,34 @@
 			</tr>
 			<tr>
 				<th id = "0"></th>
-				<th id = "="></th>
-				<th id = "/" colspan = "2"></th>
+				<th id = "=" colspan = "2"></th>
+				<th id = "/"></th>
 			</tr>
 		</table>
+		
+		<script>
+			update();
+			
+			document.getElementById("C").appendChild(createButton("C"));
+			document.getElementById("d").appendChild(createButton("d"));
+			document.getElementById("(").appendChild(createButton("("));
+			document.getElementById(")").appendChild(createButton(")"));
+			document.getElementById("1").appendChild(createButton("1"));
+			document.getElementById("2").appendChild(createButton("2"));
+			document.getElementById("3").appendChild(createButton("3"));
+			document.getElementById("+").appendChild(createButton("+"));
+			document.getElementById("4").appendChild(createButton("4"));
+			document.getElementById("5").appendChild(createButton("5"));
+			document.getElementById("6").appendChild(createButton("6"));
+			document.getElementById("-").appendChild(createButton("-"));
+			document.getElementById("7").appendChild(createButton("7"));
+			document.getElementById("8").appendChild(createButton("8"));
+			document.getElementById("9").appendChild(createButton("9"));
+			document.getElementById("*").appendChild(createButton("*"));
+			document.getElementById("0").appendChild(createButton("0"));
+			document.getElementById("=").appendChild(createButton("="));
+			document.getElementById("/").appendChild(createButton("/"));
+			
+		</script>
 	</body>
 </html>
