@@ -48,7 +48,7 @@
 				else return Number(eq.substring(start, end + 1));
 			}
 			var tmp1;
-			if (pos == 0 && (eq.charAt(pos) == '+' || eq.charAt(pos) == '-')) tmp1 = 0;
+			if (pos == start && (eq.charAt(pos) == '+' || eq.charAt(pos) == '-')) tmp1 = 0;
 			else tmp1 = calc(eq.substring(start, pos));
 			var tmp2 = calc(eq.substring(pos + 1, end + 1));
 			if (eq.charAt(pos) == '+') return tmp1 + tmp2;
