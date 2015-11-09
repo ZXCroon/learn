@@ -53,8 +53,11 @@
 		}
 		
 		function update() {
+			/*
 			var textBoxNode = document.createTextNode(equation);
 			document.getElementById("t").appendChild(textBoxNode);
+			*/
+			document.getElementById("t").innerHTML = equation;
 		}
 		
 		function append(ch) {
@@ -88,13 +91,12 @@
 			var buttonNode = document.createElement("button");
 			buttonNode.type = "button";
 			if (ch != '=' && ch != 'd' && ch != 'C') {
-				//buttonNode.setAttribute("onclick", append(ch));
-				buttonNode.onclick = "append(ch)";
+				buttonNode.onclick = function() {append(ch)};
 			}
 			else {
-				if (ch == '=') buttonNode.onclick = "getAnswer()";
-				if (ch == 'd') buttonNode.onclick = "backSpace()";
-				if (ch == 'C') buttonNode.onclick = "clear()";
+				if (ch == '=') buttonNode.onclick = getAnswer();
+				if (ch == 'd') buttonNode.onclick = backSpace();
+				if (ch == 'C') buttonNode.onclick = clear();
 			}
 			var textNode;
 			if (ch == 'd')
@@ -102,7 +104,7 @@
 			else
 				textNode = document.createTextNode(ch);
 			if (ch == '=')
-				buttonNode.setAttribute("style", "width: 71 px");
+				buttonNode.style = "width: 71 px";
 			buttonNode.appendChild(textNode);
 			return buttonNode;
 		}
